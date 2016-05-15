@@ -80,26 +80,3 @@ $data = @(
 $people | Select-Object loanName, amount, nickname, rating, nextPaymentDate, paymentStatus, loanTermInMonth, paidInterest, dueInterest, paidPrincipal, duePrincipal, expectedInterest, currentTerm  | Out-GridView
 
 $riskPortfolio | Out-GridView
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
