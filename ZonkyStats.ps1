@@ -30,7 +30,7 @@ $body = @{
 $req = Invoke-restmethod -Uri ($path + $pathToken) -Method POST -Headers $header -Body $body 
 $ServicePoint = [System.Net.ServicePointManager]::FindServicePoint($path + $pathToken)
 $ServicePoint.CloseConnectionGroup("")
-#########################################################################
+###################################################################################################
 #token do hlavicky
 $header['Authorization'] = "Bearer " + $req.access_token
 
