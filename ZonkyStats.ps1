@@ -30,7 +30,7 @@ $body = @{
 
 $req = Invoke-restmethod -Uri ($path + $pathToken) -Method POST -Headers $header -Body $body 
 $ServicePoint = [System.Net.ServicePointManager]::FindServicePoint($path + $pathToken)
-$ServicePoint.CloseConnectionGroup("")
+$ServicePoint.CloseConnectionGroup("") | Out-Null
 ###################################################################################################
 #token do hlavicky
 $header['Authorization'] = "Bearer " + $req.access_token
@@ -38,12 +38,12 @@ $header['Authorization'] = "Bearer " + $req.access_token
 #penezenka
 $wallet = Invoke-restmethod -Uri ($path + $pathWallet) -Headers $header
 $ServicePoint = [System.Net.ServicePointManager]::FindServicePoint($path + $pathWallet)
-$ServicePoint.CloseConnectionGroup("")
+$ServicePoint.CloseConnectionGroup("") | Out-Null
 
 #statistiky
 $stats = Invoke-restmethod -Uri ($path + $pathStats) -Headers $header
 $ServicePoint = [System.Net.ServicePointManager]::FindServicePoint($path + $pathStats)
-$ServicePoint.CloseConnectionGroup("")
+$ServicePoint.CloseConnectionGroup("") | Out-Null
 
 #lide co jsem podporil
 $header.Add("X-Size", $stats.overallOverview.investmentCount)
@@ -78,6 +78,8 @@ $data = @(
 	"Vydelano: " + $stats.overallOverview.netIncome + " Kc"
 ) | Out-GridView
 
-$people | Select-Object loanName, amount, nickname, rating, nextPaymentDate, paymentStatus, loanTermInMonth, paidInterest, dueInterest, paidPrincipal, duePrincipal, expectedInterest, currentTerm  | Out-GridView
-
+$people | Select-Object @{N="Název";E={$_.loanName}}, @{N="Investováno";E={$_.amount}}, @{N="Přezdívka";E={$_.nickname}}, rating, @{N="Další platba";E={$_.nextPaymentDate}}, `
+						@{N="Status";E={$_.paymentStatus}}, @{N="Doba splácení";E={$_.loanTermInMonth}}, @{N="Zaplacený úrok";E={$_.paidInterest}}, @{N="Úrok po splatnosti";E={$_.dueInterest}}, `
+						@{N="Vrátilo se mi";E={$_.paidPrincipal}}, @{N="Po splatnosti";E={$_.duePrincipal}}, @{N="Očekávaný úrok";E={$_.expectedInterest}}, @{N="Aktuální doba splácení";E={$_.currentTerm}} | Out-GridView
+						
 $riskPortfolio | Out-GridView
