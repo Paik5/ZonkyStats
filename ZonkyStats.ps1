@@ -6,7 +6,7 @@ $pathPeople = 'users/me/investments?loan.status__in=%5B%22ACTIVE%22,%22SIGNED%22
 $pathLogout = 'users/me/logout'
 $cred = Get-Credential
 
-$contentLength = $cred.UserName.Length + $cred.GetNetworkCredential().Password.Length + 61
+$contentLength = ([uri]::EscapeDataString($cred.UserName)).Length + ([uri]::EscapeDataString($cred.GetNetworkCredential().Password)).Length + 59
 #prihlaseni
 $header = @{
 Accept = "application/json, text/plain, */*"
