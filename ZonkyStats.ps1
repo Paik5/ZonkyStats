@@ -55,7 +55,6 @@ $ServicePoint.CloseConnectionGroup("") | Out-Null
 $logout = Invoke-restmethod -Uri ($path + $pathLogout) -Headers $header
 ###################################################################################################
 
-
 foreach ($item in $people)
 	{
 		$item.rating = switch ($item.rating) {"AAAAA" {"A**"} "AAAA" {"A*"} "AAA" {"A++"} "AA" {"A+"} default {$item.rating}}
