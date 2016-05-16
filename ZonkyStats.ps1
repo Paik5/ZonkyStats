@@ -70,6 +70,11 @@ $riskPortfolio = @{}
 		$riskPortfolio.add($rating.rating, [math]::Round(($rating.totalAmount * 100)/$stats.overallOverview.totalInvestment))
 	}
 
+$people | Select-Object @{N="Název";E={$_.loanName}}, @{N="Investováno";E={$_.amount}}, @{N="Přezdívka";E={$_.nickname}}, rating, @{N="Další platba";E={$_.nextPaymentDate}}, `
+						@{N="Status";E={$_.paymentStatus}}, @{N="Doba splácení";E={$_.loanTermInMonth}}, @{N="Zaplacený úrok";E={$_.paidInterest}}, @{N="Úrok po splatnosti";E={$_.dueInterest}}, `
+						@{N="Vrátilo se mi";E={$_.paidPrincipal}}, @{N="Po splatnosti";E={$_.duePrincipal}}, @{N="Očekávaný úrok";E={$_.expectedInterest}}, @{N="Aktuální doba splácení";E={$_.currentTerm}}`
+						| Out-GridView -PassThru
+
 $paid = $stats.overallOverview.principalPaid + $stats.overallOverview.interestPaid
 $data = @(
 	"Investovano: " + $stats.overallOverview.totalInvestment + " Kc"
@@ -78,10 +83,6 @@ $data = @(
 	"Ocekavany urok: " + $stats.expectedProfitability * 100 + "%"
 	"Splaceno: " + $paid + " Kc"
 	"Vydelano: " + $stats.overallOverview.netIncome + " Kc"
-) | Out-GridView
-
-$people | Select-Object @{N="Název";E={$_.loanName}}, @{N="Investováno";E={$_.amount}}, @{N="Přezdívka";E={$_.nickname}}, rating, @{N="Další platba";E={$_.nextPaymentDate}}, `
-						@{N="Status";E={$_.paymentStatus}}, @{N="Doba splácení";E={$_.loanTermInMonth}}, @{N="Zaplacený úrok";E={$_.paidInterest}}, @{N="Úrok po splatnosti";E={$_.dueInterest}}, `
-						@{N="Vrátilo se mi";E={$_.paidPrincipal}}, @{N="Po splatnosti";E={$_.duePrincipal}}, @{N="Očekávaný úrok";E={$_.expectedInterest}}, @{N="Aktuální doba splácení";E={$_.currentTerm}} | Out-GridView
+) | Out-GridView -PassThru
 						
-$riskPortfolio | Out-GridView
+$riskPortfolio | Out-GridView -PassThru
