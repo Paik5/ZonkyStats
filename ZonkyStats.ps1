@@ -6,6 +6,7 @@ $pathPeople = 'users/me/investments?loan.status__in=%5B%22ACTIVE%22,%22SIGNED%22
 $pathLogout = 'users/me/logout'
 $cred = Get-Credential
 
+$contentLength = $cred.UserName.Length + $cred.GetNetworkCredential().Password.Length + 61
 #prihlaseni
 $header = @{
 Accept = "application/json, text/plain, */*"
@@ -13,7 +14,7 @@ Accept = "application/json, text/plain, */*"
 "Accept-Language"	= "cs,en-US;q=0.7,en;q=0.3"
 Authorization = "Basic d2ViOndlYg=="
 #Connection = "keep-alive"
-"Content-Length" = "100"
+"Content-Length" = $contentLength
 "Content-Type" = "application/x-www-form-urlencoded"
 Host = "api.zonky.cz"
 Origin = "https://app.zonky.cz"
