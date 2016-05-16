@@ -58,7 +58,10 @@ $logout = Invoke-restmethod -Uri ($path + $pathLogout) -Headers $header
 foreach ($item in $people)
 	{
 		$item.rating = switch ($item.rating) {"AAAAA" {"A**"} "AAAA" {"A*"} "AAA" {"A++"} "AA" {"A+"} default {$item.rating}}
-		$item.nextPaymentDate = $item.nextPaymentDate.split("T")[0]
+		if ($item.nextPaymentDate -ne $null)
+		{
+			$item.nextPaymentDate = $item.nextPaymentDate.split("T")[0]
+		}
 	}
 
 $riskPortfolio = @{}
